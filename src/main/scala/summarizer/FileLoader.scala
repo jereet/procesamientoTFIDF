@@ -6,11 +6,12 @@ class FileLoader {
       throw new IllegalArgumentException (s"El directorio $dirPath no existe o no es un directorio.")
     }
 
-    val files = dir.listFiles()
-    val filesTxt = files.filter(f => f.isFile && f.getName.endsWith(".txt"))
-    val filesList = filesTxt.toList
+    val files = 
+      dir.listFiles()
+      .filter(f => f.isFile && f.getName.endsWith(".txt"))
+      .toList
 
-    filesList.map {file =>
+    files.map {file =>
       val source = scala.io.Source.fromFile (file)
       val content = try source.mkString finally source.close ()
       (file.getName, content)
