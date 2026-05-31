@@ -1,15 +1,15 @@
 class TextProcessor {
-  val stopwords: Set[String] = {
-    val source = scala.io.Source.fromResource("stopwords.txt")
+  private val stopwords: Set[String] = {
+    val source = scala.io.Source.fromFile("src\\main\\resources\\stopwords-es.txt")
     val words = try source.getLines().toSet
     finally source.close()
     words
   }
   def sentenceSegment(text: String): List[String] = {
-    val endings = "(?<=[.!?])\\s+"
+    val endings = "(?<=[.!?])\\s+|\\n+"
     text.split(endings)
       .map(_.trim)
-      .filter(_.nonEmpty)
+      .filter(s => s.nonEmpty && s.split("\\s+").length >= 5)
       .toList
   }
 
